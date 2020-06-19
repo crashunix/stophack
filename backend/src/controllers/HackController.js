@@ -10,6 +10,11 @@ module.exports = {
             'letter': req.body.letter
         });
 
+        words.map((word, index) => {
+            const wordGroup = WordGroup.findById(word.wordGroup);
+            word[index].wordGroup = wordGroup;
+        });
+
         return res.json(words);
     }
 }
