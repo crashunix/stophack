@@ -17,6 +17,6 @@ routes.post('/words', WordController.store);
 routes.put('/words/:id', WordController.update);
 routes.delete('/words/:id', WordController.destroy);
 
-routes.post('/hack/', HackController.batota);
+routes.post('/hack', HackController.batota);
 
 module.exports = routes;
