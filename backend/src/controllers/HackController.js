@@ -4,7 +4,7 @@ const Word = mongoose.model('Word');
 const WordGroup = mongoose.model('WordGroup');
 
 module.exports = {
-    async batatao(req, res) {
+    async batota(req, res) {
         const words = await Word.find({
             'wordGroup': { $in: req.body.wordGroups},
             'letter': req.body.letter
