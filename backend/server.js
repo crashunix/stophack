@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require('express');
 
 const cors = require('cors');
@@ -11,7 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 //Iniciando o DB
-mongoose.connect('mongodb://localhost:27017/stophack', { useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true});
 
 requireDir('./src/models/');
 
