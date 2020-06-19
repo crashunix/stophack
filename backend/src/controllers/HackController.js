@@ -8,12 +8,7 @@ module.exports = {
         const words = await Word.find({
             'wordGroup': { $in: req.body.wordGroups},
             'letter': req.body.letter
-        });
-
-        words.map((word, index) => {
-            const wordGroup = WordGroup.findById(word.wordGroup);
-            word.wordGroup = wordGroup;
-        });
+        }).populate('wordGroup');
 
         return res.json(words);
     }
