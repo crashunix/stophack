@@ -19,5 +19,4 @@ routes.delete('/words/:id', WordController.destroy);
 
 routes.get('/hack/', HackController.batatao);
 
-
 module.exports = routes;
