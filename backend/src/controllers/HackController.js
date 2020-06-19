@@ -12,7 +12,7 @@ module.exports = {
 
         words.map((word, index) => {
             const wordGroup = WordGroup.findById(word.wordGroup);
-            word[index].wordGroup = wordGroup;
+            word.wordGroup = wordGroup;
         });
 
         return res.json(words);
