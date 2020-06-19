@@ -20,4 +20,4 @@ requireDir('./src/models/');
 // Rotas
 app.use('/api', require('./src/routes'));
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
