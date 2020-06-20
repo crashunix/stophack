@@ -5,19 +5,19 @@ import axios from 'axios';
 
 import { MaterialCommunityIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 
-import { 
-    Wrapper, 
-    Header, 
-    Container, 
-    Logo, 
-    Nav, 
-    NavItem, 
-    NoConnection, 
-    Group, 
-    Title, 
-    ScrollGroups, 
-    Form, 
-    TextInput, 
+import {
+    Wrapper,
+    Header,
+    Container,
+    Logo,
+    Nav,
+    NavItem,
+    NoConnection,
+    Group,
+    Title,
+    ScrollGroups,
+    Form,
+    TextInput,
     Result,
     Label,
     Word,
@@ -33,7 +33,7 @@ export default function Home() {
     const [groups, setGroups] = useState([]);
     const [groupsSelected, setGroupsSelected] = useState([]);
     const [results, setResults] = useState([]);
-    const [text, setText] = useState([]);
+    const [letter, setLetter] = useState([]);
 
     async function getGroups() {
         const response = await fetch('https://stophack.herokuapp.com/api/wordgroups');
@@ -56,16 +56,19 @@ export default function Home() {
         } else {
             setGroupsSelected([...groupsSelected, id]);
         }
+        console.log(groupsSelected);
     }
 
     function hack(letter) {
+        console.log('click')
+        const groups = groupsSelected;
         axios.post(`https://stophack.herokuapp.com/api/hack`, {
-            wordGroups: groupsSelected,
+            wordGroups: groups,
             letter: letter
         }).then(res => {
             setResults(res.data);
-            console.log(results);
         })
+        console.log(results);
     }
 
     return (
@@ -83,12 +86,17 @@ export default function Home() {
                 </ScrollGroups>
                 <Divider></Divider>
                 <Form>
-                    <TextInput onChangeText={text => setText(text)}></TextInput>
+                    <TextInput onChangeText={text => setLetter(text)}></TextInput>
                     <Button onPress={() => hack(text)} title="Buscar"></Button>
                 </Form>
                 <ScrollResults>
-                    {results.map(result => (
+                    {results && results.map(result => (
                         <Result key={result._id}><Label>{result.wordGroup.label}</Label><Word>{result.label}</Word></Result>
+                    ))}
+                </ScrollResults>
+                <ScrollResults>
+                    {groupsSelected.map(group => (
+                        <Text key={group}>{group}</Text>
                     ))}
                 </ScrollResults>
             </Container>

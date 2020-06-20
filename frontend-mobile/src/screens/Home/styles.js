@@ -14,7 +14,7 @@ export const Header = styled.View`
 `;
 
 export const Title = styled.Text`
-    font-size: 32px
+    font-size: 32px;
 `;
 
 export const Container = styled.ScrollView``;
