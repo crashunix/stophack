@@ -10,8 +10,6 @@ module.exports = {
             'letter': req.body.letter
         }).populate('wordGroup');
 
-        console.log('success');
-
         return res.json(words);
     }
 }

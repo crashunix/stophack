@@ -33,7 +33,7 @@ export default function Home() {
     const [groups, setGroups] = useState([]);
     const [groupsSelected, setGroupsSelected] = useState([]);
     const [results, setResults] = useState([]);
-    const [letter, setLetter] = useState([]);
+    const [text, setText] = useState([]);
 
     async function getGroups() {
         const response = await fetch('https://stophack.herokuapp.com/api/wordgroups');
@@ -48,27 +48,22 @@ export default function Home() {
     function selectGroup(id) {
         const alreadySelected = groupsSelected.findIndex(item => item === id);
 
-        console.log("Selected");
-
         if (alreadySelected >= 0) {
             const filteredItems = groupsSelected.filter(item => item !== id);
             setGroupsSelected(filteredItems);
         } else {
             setGroupsSelected([...groupsSelected, id]);
         }
-        console.log(groupsSelected);
     }
 
-    function hack(letter) {
-        console.log('click')
+    function hack() {
         const groups = groupsSelected;
         axios.post(`https://stophack.herokuapp.com/api/hack`, {
             wordGroups: groups,
-            letter: letter
+            letter: text
         }).then(res => {
             setResults(res.data);
         })
-        console.log(results);
     }
 
     return (
@@ -86,17 +81,12 @@ export default function Home() {
                 </ScrollGroups>
                 <Divider></Divider>
                 <Form>
-                    <TextInput onChangeText={text => setLetter(text)}></TextInput>
-                    <Button onPress={() => hack(text)} title="Buscar"></Button>
+                    <TextInput onChangeText={text => setText(text.toLowerCase())}></TextInput>
+                    <Button onPress={() => hack()} title="Buscar"></Button>
                 </Form>
                 <ScrollResults>
                     {results && results.map(result => (
                         <Result key={result._id}><Label>{result.wordGroup.label}</Label><Word>{result.label}</Word></Result>
-                    ))}
-                </ScrollResults>
-                <ScrollResults>
-                    {groupsSelected.map(group => (
-                        <Text key={group}>{group}</Text>
                     ))}
                 </ScrollResults>
             </Container>
